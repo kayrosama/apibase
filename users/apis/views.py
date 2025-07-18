@@ -35,29 +35,29 @@ class UserView(APIView):
 
         if user_id:
             if request.user.username != 'elta':
-                logger.warning(f"xxx :: {request.user.username} :: Unauthorized :: No tienes permisos para ver informacion de otros usuarios.")
+                logger.warning(f"UserView :: {request.user.username} :: Unauthorized :: No tienes permisos para ver informacion de otros usuarios.")
                 return Response({"detail": "No tienes permisos para ver otros usuarios."}, status=status.HTTP_403_FORBIDDEN)
             try:
                 user = User.objects.get(id=user_id)
                 serializer = UserSerializer(user)
-                logger.info(f"xxx :: {request.user.username} :: Authorized :: Obtiene informacion del usuario con ID {user_id}")
+                logger.info(f"UserView :: {request.user.username} :: Authorized :: Obtiene informacion del usuario con ID {user_id}")
                 return Response(serializer.data)
             except User.DoesNotExist:
-                logger.error(f"xxx :: {request.user.username} :: Authorized :: Usuario con ID {user_id} no encontrado")
+                logger.error(f"UserView :: {request.user.username} :: Authorized :: Usuario con ID {user_id} no encontrado")
                 return Response({"detail": "Usuario no encontrado."}, status=status.HTTP_404_NOT_FOUND)
 
         elif all_users:
             if request.user.username != 'elta':
-                logger.warning(f"xxx :: {request.user.username} :: Unauthorized :: No tienes permisos para ver informacion de todos los usuarios.")
+                logger.warning(f"UserView :: {request.user.username} :: Unauthorized :: No tienes permisos para ver informacion de todos los usuarios.")
                 return Response({"detail": "No tienes permisos para ver todos los usuarios."}, status=status.HTTP_403_FORBIDDEN)
             users = User.objects.filter(is_superuser=False)
             serializer = UserSerializer(users, many=True)
-            logger.info(f"xxx :: {request.user.username} :: Authorized :: Obtiene informacion de todos los usuarios.")
+            logger.info(f"UserView :: {request.user.username} :: Authorized :: Obtiene informacion de todos los usuarios.")
             return Response(serializer.data)
 
         else:
             serializer = UserSerializer(request.user)
-            logger.info(f"xxx :: {request.user.username} :: Authorized :: Obtiene su propia informaicon.")
+            logger.info(f"UserView :: {request.user.username} :: Authorized :: Obtiene su propia informaicon.")
             return Response(serializer.data)
 
     def put(self, request):

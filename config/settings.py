@@ -155,7 +155,7 @@ LOGGING = {
         },
     },
     'loggers': {
-        'user_update_logger': {
+        'user_apis_view': {
             'handlers': ['file'],
             'level': 'INFO',
             'propagate': False,
