@@ -1,4 +1,5 @@
 import requests
+from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -28,7 +29,7 @@ def login_view(request):
         if response.status_code == 200:
             token = response.json().get('access')
             if token:
-                response = redirect('/menu/')  # Ajusta esta ruta según tu menú
+                response = redirect('/home/')  # Ajusta esta ruta según tu menú
                 response.set_cookie('auth_token', token)
                 return response
             else:
@@ -49,4 +50,11 @@ def reports_view(request):
 
 def about_view(request):
     return render(request, 'frontend/about.html')
+
+def logout_view(request):
+    logout(request)
+    response = redirect('login') 
+    response.delete_cookie('auth_token') 
+    return response
+
 
