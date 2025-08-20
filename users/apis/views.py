@@ -1,7 +1,8 @@
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework_simplejwt.authentication import JWTAuthentication
 from users.apis.serializers import UserRegisterSerializer, UserSerializer, UserUpdateSerializer
 from users.models import User
 
@@ -18,6 +19,19 @@ class RegisterView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class VerifyTokenView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        auth = JWTAuthentication()
+        try:
+            validated_token = auth.get_validated_token(request.headers.get('Authorization').split()[1])
+            user = auth.get_user(validated_token)
+            return Response({'detail': 'Token válido', 'user': user.username}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'detail': 'Token inválido o expirado'}, status=status.HTTP_403_FORBIDDEN)
 
 
 class UserView(APIView):

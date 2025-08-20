@@ -3,6 +3,8 @@ from django.contrib.auth import logout
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from frontend.decorators import token_required
+
 
 @csrf_exempt
 def login_view(request):
@@ -39,15 +41,20 @@ def login_view(request):
 
     return render(request, 'frontend/login.html')
 
+
+@token_required
 def menu_view(request):
     return render(request, 'frontend/menu.html')
 
+@token_required
 def home_view(request):
     return render(request, 'frontend/home.html')
 
+@token_required
 def reports_view(request):
     return render(request, 'frontend/reports.html')
 
+@token_required
 def about_view(request):
     return render(request, 'frontend/about.html')
 
