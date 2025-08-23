@@ -31,7 +31,7 @@ def login_view(request):
         if response.status_code == 200:
             token = response.json().get('access')
             if token:
-                response = redirect('/home/')  # Ajusta esta ruta según tu menú
+                response = redirect('/track/')  # Ajusta esta ruta según tu menú
                 response.set_cookie('auth_token', token)
                 return response
             else:
@@ -43,16 +43,12 @@ def login_view(request):
 
 
 @token_required
-def menu_view(request):
-    return render(request, 'frontend/menu.html')
+def track_view(request):
+    return render(request, 'frontend/tracking.html')
 
 @token_required
-def home_view(request):
-    return render(request, 'frontend/home.html')
-
-@token_required
-def reports_view(request):
-    return render(request, 'frontend/reports.html')
+def ship_view(request):
+    return render(request, 'frontend/shipping.html')
 
 @token_required
 def about_view(request):

@@ -3,7 +3,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>KSM</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Bootstrap 5 CSS desde archivo local -->
@@ -29,10 +29,20 @@
             padding: 2rem;
             border-radius: 1rem;
             box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: 0 auto;
         }
         .image-container img {
             max-width: 100%;
             height: auto;
+        }
+        .btn-orange {
+            background-color: #f97316;
+            color: white;
+            border: none;
+        }
+        .btn-orange:hover {
+            background-color: #e65c00;
         }
     </style>
 </head>
@@ -43,7 +53,7 @@
       <div class="col-md-6 d-flex justify-content-center align-items-center image-container">
         <img src="{% static 'img/ichi.ban.png' %}" class="img-fluid" alt="Sample image">
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 col-lg-5 mx-auto">
         <div class="login-card">
           <h3 class="text-center mb-4">Iniciar Sesión</h3>
           {% for message in messages %}
@@ -61,7 +71,7 @@
                   <input type="password" class="form-control" id="password" name="password" minlength="6" required>
                   <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
               </div>
-              <button type="submit" class="btn btn-primary w-100">Ingresar</button>
+              <button type="submit" class="btn btn-orange w-100">Ingresar</button>
           </form>
         </div>
       </div>

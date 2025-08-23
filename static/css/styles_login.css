@@ -9,8 +9,10 @@ body {
     padding: 2rem;
 }
 .login-card {
+    background-color: #fff;
     padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
-    background-color: #fff;
+    max-width: 400px;
+    margin: 0 auto;
 }
