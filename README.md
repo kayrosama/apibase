@@ -24,8 +24,6 @@ Linux:
 
 git clone https://github.com/kayrosama/apibase.git
 cd apibase
-rm ./db.sqlite3
-rm ./users/migrations/0*_initial.py
 apt-get install -f -y python3-pip python3-venv
 python3 -m venv .venv
 source .venv/bin/activate
