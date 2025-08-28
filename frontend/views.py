@@ -8,6 +8,9 @@ from frontend.decorators import token_required
 
 @csrf_exempt
 def login_view(request):
+    if request.COOKIES.get('auth_token'):
+        return redirect('/track/')
+
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
