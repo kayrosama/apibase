@@ -4,11 +4,13 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from frontend.decorators import token_required
+from frontend.utils import is_token_valid
 
 
 @csrf_exempt
 def login_view(request):
-    if request.COOKIES.get('auth_token'):
+    token = request.COOKIES.get('auth_token')
+    if is_token_valid(token):
         return redirect('/track/')
 
     if request.method == 'POST':
