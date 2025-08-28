@@ -24,11 +24,13 @@ Linux:
 
 git clone https://github.com/kayrosama/apibase.git
 cd apibase
+rm ./db.sqlite3
+rm ./users/migrations/0*_initial.py
 apt-get install -f -y python3-pip python3-venv
 python3 -m venv .venv
 source .venv/bin/activate
 python3 -m pip install --upgrade pip
-python3 -m pip install -r requirements.txt 
+python3 -m pip install -r requirements.txt
 
 ```
 
@@ -47,10 +49,12 @@ users/models.py
 
 ##### Paso 04: ...
 
-Eliminar la base de datos creada [db.sqlite3], el archivo [users/migrations/0001_initial.py] y posteriormente ejecutar la nueva migracion.
+Debe eliminar la base de datos creada [db.sqlite3], el archivo [users/migrations/0*_initial.py] y posteriormente ejecutar la nueva migracion.
 
 ```bash
 
+rm ./db.sqlite3
+rm ./users/migrations/0*_initial.py
 python3 manage.py makemigrations
 python3 manage.py migrate
 
