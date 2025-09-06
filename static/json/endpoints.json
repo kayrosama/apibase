@@ -1,0 +1,5 @@
+{
+  "auth_verify": "http://127.0.0.1:8000/apis/auth/verify",
+  "auth_login": "http://127.0.0.1:8000/apis/auth/login",
+  "auth_mante": "http://127.0.0.1:8000/apis/auth/mante"
+}
