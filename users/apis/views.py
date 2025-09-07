@@ -5,7 +5,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from core_auth.permissions import IsZetaRoleOrReadOnly
-from core_auth.decorators import role_permission
+from core_auth.decorators import role_permission, rate_limit_log 
 from users.apis.serializers import UserRegisterSerializer, UserSerializer, UserUpdateSerializer
 from core_auth.models import User
 
@@ -13,6 +13,7 @@ from core_auth.models import User
 class RegisterView(APIView):
     permission_classes = [IsAuthenticated]
 
+    @rate_limit_log(key='ip', rate='5/m', block=True)
     @role_permission(required_roles=['admin'], allow_self=False)
     def post(self, request):
         serializer = UserRegisterSerializer(data=request.data)
@@ -59,6 +60,7 @@ class UserView(APIView):
             serializer = UserSerializer(request.user)
             return Response(serializer.data)
 
+    @rate_limit_log(key='ip', rate='5/m', block=True)
     @role_permission(required_roles=['admin', 'sysoper'], allow_self=False, restrict_role_change=True)
     def put(self, request):
         user_id = request.data.get('id')
@@ -81,6 +83,7 @@ class UserView(APIView):
                 return Response(serializer.data)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @rate_limit_log(key='ip', rate='5/m', block=True)
     @role_permission(required_roles=['admin', 'sysoper'], allow_self=False, restrict_role_change=True)
     def patch(self, request):
         updates = request.data  # Se espera una lista de objetos con id y campos a actualizar

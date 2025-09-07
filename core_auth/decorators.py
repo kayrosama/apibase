@@ -2,7 +2,12 @@ from functools import wraps
 from django.shortcuts import redirect
 from rest_framework.response import Response
 from rest_framework import status
+from django_ratelimit.decorators import ratelimit
+from django.utils.decorators import method_decorator
 from core_auth.utils import is_token_valid
+import logging
+
+logger = logging.getLogger('filemon')
 
 def token_required(view_func):
     @wraps(view_func)
@@ -32,3 +37,16 @@ def role_permission(required_roles, allow_self=False, restrict_role_change=True)
             return view_func(self, request, *args, **kwargs)
         return _wrapped_view
     return decorator
+
+def rate_limit_log(key='ip', rate='5/m', block=True):
+    def decorator(view_func):
+        @method_decorator(ratelimit(key=key, rate=rate, block=block))
+        def _wrapped_view(self, request, *args, **kwargs):
+            if hasattr(request, 'limited') and request.limited:
+                ip = request.META.get('REMOTE_ADDR', 'unknown')
+                path = request.path
+                logger.warning(f'Rate limit excedido: IP={ip}, PATH={path}')
+            return view_func(self, request, *args, **kwargs)
+        return _wrapped_view
+    return decorator
+
