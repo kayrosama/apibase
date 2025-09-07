@@ -1,0 +1,16 @@
+
+body {
+    background-color: #f8f9fa;
+}
+.login-container {
+    min-height: 100vh;
+    max-width: 400px;
+    margin: auto;
+    padding: 2rem;
+}
+.login-card {
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+    background-color: #fff;
+}

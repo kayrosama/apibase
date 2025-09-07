@@ -1,0 +1,101 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>KSM</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap 5 CSS desde archivo local -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'css/styles_login.css' %}" rel="stylesheet">
+
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        .full-height {
+            height: 100vh;
+        }
+        .centered-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+        }
+        .login-card {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 1rem;
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+        }
+        .btn-orange {
+            background-color: #f97316;
+            color: white;
+            border: none;
+        }
+        .btn-orange:hover {
+            background-color: #e65c00;
+        }
+    </style>
+</head>
+<body>
+<section class="full-height">
+  <div class="container-fluid h-100">
+    <div class="row h-100 centered-container">
+      <div class="col-md-6 d-flex justify-content-center align-items-center image-container">
+        <img src="{% static 'img/baka.png' %}" class="img-fluid" alt="Sample image">
+      </div>
+      <div class="col-md-6 col-lg-5 mx-auto">
+        <div class="login-card">
+          <h3 class="text-center mb-4">Iniciar Sesión</h3>
+          {% for message in messages %}
+              <div class="alert alert-danger">{{ message }}</div>
+          {% endfor %}
+          <form method="post" novalidate>
+              {% csrf_token %}
+              <div class="mb-3">
+                  <label for="email" class="form-label">Correo electrónico</label>
+                  <input type="email" class="form-control" id="email" name="email" required>
+                  <div class="invalid-feedback">Ingresa un correo válido.</div>
+              </div>
+              <div class="mb-3">
+                  <label for="password" class="form-label">Contraseña</label>
+                  <input type="password" class="form-control" id="password" name="password" minlength="6" required>
+                  <div class="invalid-feedback">La contraseña debe tener al menos 6 caracteres.</div>
+              </div>
+              <button type="submit" class="btn btn-orange w-100">Ingresar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Bootstrap Bundle JS desde archivo local -->
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script>
+    // Validación de formulario con Bootstrap
+    (function () {
+        'use strict'
+        const forms = document.querySelectorAll('form')
+        Array.from(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
+</body>
+</html>
